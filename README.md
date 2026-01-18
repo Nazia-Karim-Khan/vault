@@ -127,7 +127,7 @@ GRANT ALL PRIVILEGES ON DATABASE foo TO "{{name}}";
 
 ### Create Access Policy
 
-1. Create role: `internal-app`
+1. Create policy: `internal-app`
 2. Create access policy with the following content:
 
 ```
@@ -151,7 +151,7 @@ path "database/creds/my-role" {
 kubectl apply -f db-secret-provider.yaml -n spring
 ```
 
-## Deploy Application
+### Deploy Application
 
 ```bash
 kubectl apply -f deployment-service.yaml -n spring

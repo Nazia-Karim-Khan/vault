@@ -50,7 +50,7 @@
 		</dependency>
 
 
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-vault-config</artifactId>
 		</dependency>
@@ -64,7 +64,7 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-vault-config-databases</artifactId>
             <version>3.0.0-SNAPSHOT</version>
-        </dependency>
+        </dependency> -->
 
 
 		<dependency>
