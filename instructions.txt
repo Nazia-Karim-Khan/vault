@@ -50,12 +50,11 @@ helm repo add postgres-operator-ui-charts https://opensource.zalando.com/postgre
 
 # install the postgres-operator-ui
 helm install postgres-operator-ui postgres-operator-ui-charts/postgres-operator-ui -n postgress --create-namespace
+kubectl create -f postgres/manifest.yaml -n postgress
 
 
 kubectl port-forward svc/postgres-operator-ui 8081:80
 
-
-kubectl create -f postgres/manifest.yaml -n postgress
 
 make targetNamespace: "*" in operator-ui deployment and restart
 
@@ -72,7 +71,62 @@ Create statement:
 CREATE ROLE "{{name}}" WITH LOGIN PASSWORD '{{password}}' VALID UNTIL '{{expiration}}';
 GRANT ALL PRIVILEGES ON DATABASE foo TO "{{name}}";
 
-wip...
+create auth kubernetes
+create role
+create access policy
+
+path "database/creds/my-role" {
+  capabilities = ["read"]
+}
+
+bind role with access policy
+
+
+create SecretProviderClass
+
+mount
+
+NvXdgko8hE5iPLp-LOvwcnb@hello-spring-boot-app-57fb49b655-smj4m:/mnt/secrets-store$ cat db-password 
+NvXdgko8hE5iPLp-LOvwcnb@hello-spring-boot-app-57fb49b655-smj4m:/mnt/secrets-store$ cat db-username 
+v-kubernet-my-role-N4FK7KZlNDd5bByFFrIK-1768471195cnb@hello-spring-boot-app-57fb49b655-smj4m:/mnt/secrets-store$ 
+
+
+csi
+
+helm repo add secrets-store-csi-driver https://kubernetes-sigs.github.io/secrets-store-csi-driver/charts
+helm pull secrets-store-csi-driver/secrets-store-csi-driver --untar
+helm install csi-driver ./secrets-store-csi-driver -n csi --create-namespace -f ./secrets-store-csi-driver/values.yaml
+
+
+
 
 
 Links: https://github.com/zalando/postgres-operator/blob/master/docs/quickstart.md#helm-chart,
+
+https://developer.hashicorp.com/vault/tutorials/kubernetes-introduction/kubernetes-secret-store-driver
+
+
+
+/////////////////////////////////////
+
+
+
+
+
+
+/ $ vault secrets enable -path=secret -version=2 kv
+Success! Enabled the kv secrets engine at: secret/
+/ $ vault kv put secret/db-pass password="db-secret-password"
+=== Secret Path ===
+secret/data/db-pass
+
+======= Metadata =======
+Key                Value
+---                -----
+created_time       2026-01-15T06:14:38.098618488Z
+custom_metadata    <nil>
+deletion_time      n/a
+destroyed          false
+version            1
+/ $ 
+

@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: hello-spring-kafka-app
+    bootstrap:
+      enabled: true
+
+  kafka:
+    bootstrap-servers: kafka-cluster-kafka-bootstrap.strimzi.svc.cluster.local:9092
+
+
+  cloud:
+    bootstrap:
+      enabled: true
+    vault:
+      uri: http://vault.vault.svc:8200
+      authentication: KUBERNETES
+      kubernetes:
+        role: spring-app-role                       # Vault Kubernetes auth role
+        kubernetes-path: kubernetes                # optional if default mount
+        service-account-token-file: /var/run/secrets/kubernetes.io/serviceaccount/token
+      kv:
+        enabled: false
+      database:
+#        enabled: true
+#        backend: database
+#        role: foo-role
+#      postgresql:
+        enabled: true
+        role: foo-role                           # your Vault DB role
+        backend: database                         # Vault database backend mount
+        username-property: spring.datasource.username
+        password-property: spring.datasource.password
+
+  datasource:
+    url: jdbc:postgresql://acid-minimal-cluster.postgress.svc.cluster.local:5432/foo
+#    username: "${vault:database/creds/foo-role:username}"   # Vault dynamic username
+#    password: "${vault:database/creds/foo-role:password}"   # Vault dynamic password
+#    username: v-root-foo-role-YKHGH0JIIlunQhoxiTD5-1768292724
+#    password: FtdyT3NOr-hNVGQ5XQED
+
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+logging:
+  level:
+    org.springframework.vault: DEBUG

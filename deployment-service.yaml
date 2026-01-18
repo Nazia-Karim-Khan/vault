@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-spring-boot-app
+  labels:
+    app: hello-spring-boot-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-spring-boot-app
+  template:
+    metadata:
+      labels:
+        app: hello-spring-boot-app
+    spec:
+      serviceAccountName: webapp-sa
+      containers:
+        - name: hello-spring-boot-app
+          image: nazia141/kpack-spring-boot-app:1.0
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          volumeMounts:
+            - name: secrets-store-inline
+              mountPath: /mnt/secrets-store
+              readOnly: true
+      volumes:
+        - name: secrets-store-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "vault-db-creds"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-spring-boot-app
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30090  
+  selector:
+    app: hello-spring-boot-app
+
+
+# kind: Pod
+# apiVersion: v1
+# metadata:
+#   name: webapp
+# spec:
+#   serviceAccountName: webapp-sa
+#   containers:
+#   - image: jweissig/app:0.0.1
+#     name: webapp
+#     volumeMounts:
+#     - name: secrets-store-inline
+#       mountPath: "/mnt/secrets-store"
+#       readOnly: true
+#   volumes:
+#     - name: secrets-store-inline
+#       csi:
+#         driver: secrets-store.csi.k8s.io
+#         readOnly: true
+#         volumeAttributes:
+#           secretProviderClass: "vault-database"

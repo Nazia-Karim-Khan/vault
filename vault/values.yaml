@@ -46,7 +46,7 @@ global:
 injector:
   # True if you want to enable vault agent injection.
   # @default: global.enabled
-  enabled: "-"
+  enabled: "false"
 
   replicas: 1
 
@@ -140,7 +140,7 @@ injector:
 
   # Configures the log verbosity of the injector.
   # Supported log levels include: trace, debug, info, warn, error
-  logLevel: "info"
+  logLevel: "debug"
 
   # Configures the log format of the injector. Supported log formats: "standard", "json".
   logFormat: "standard"
@@ -383,7 +383,7 @@ server:
 
   # Configure the logging verbosity for the Vault server.
   # Supported log levels include: trace, debug, info, warn, error
-  logLevel: ""
+  logLevel: "debug"
 
   # Configure the logging format for the Vault server.
   # Supported log formats include: standard, json
@@ -1092,7 +1092,7 @@ csi:
   # With the driver and provider installed, you can mount Vault secrets into volumes
   # similar to the Vault Agent injector, and you can also sync those secrets into
   # Kubernetes secrets.
-  enabled: false
+  enabled: true
 
   image:
     repository: "hashicorp/vault-csi-provider"
@@ -1191,7 +1191,7 @@ csi:
       pullPolicy: IfNotPresent
 
     logFormat: standard
-    logLevel: info
+    logLevel: debug
 
     resources: {}
     # resources:
@@ -1254,11 +1254,11 @@ csi:
 
   # Configures the log level for the Vault CSI provider.
   # Supported log levels include: trace, debug, info, warn, error, and off
-  logLevel: "info"
+  logLevel: "debug"
 
   # Deprecated, set logLevel to debug instead.
   # If set to true, the logLevel will be set to debug.
-  debug: false
+  debug: true
 
   # Pass arbitrary additional arguments to vault-csi-provider.
   # See https://developer.hashicorp.com/vault/docs/platform/k8s/csi/configurations#command-line-arguments

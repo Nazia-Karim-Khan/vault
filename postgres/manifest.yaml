@@ -14,8 +14,20 @@ spec:
     - createdb
     foo_user: []  # role for application foo
   databases:
-    foo: zalando  # dbname: owner   Nnp731xR4l6hbneRshrNMG5apEfBAWao0abmzFbiZ4nIWkpcZthCO7Wo5Y1bnWkW
+    foo: zalando  # dbname: owner   WgM6wa0hYvmFsoKhcOAO0cqs74qJV7TadLYVL8xQRLBXE6sXeDcdiinzsyhloxFn
   preparedDatabases:
     bar: {}
   postgresql:
     version: "17"
+
+    # postgresql://{{username}}:{{password}}@acid-minimal-cluster.postgress.svc.cluster.local:5432/foo
+
+
+
+    vault write database/config/my-postgresql-database \
+    plugin_name="postgresql-database-plugin" \
+    allowed_roles="my-role" \
+    connection_url="postgresql://{{username}}:{{password}}@acid-minimal-cluster.postgress.svc.cluster.local:5432/foo" \
+    username="zalando" \
+    password="WgM6wa0hYvmFsoKhcOAO0cqs74qJV7TadLYVL8xQRLBXE6sXeDcdiinzsyhloxFn" \
+    password_authentication="scram-sha-256"
