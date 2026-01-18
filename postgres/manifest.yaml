@@ -24,10 +24,10 @@ spec:
 
 
 
-    vault write database/config/my-postgresql-database \
-    plugin_name="postgresql-database-plugin" \
-    allowed_roles="my-role" \
-    connection_url="postgresql://{{username}}:{{password}}@acid-minimal-cluster.postgress.svc.cluster.local:5432/foo" \
-    username="zalando" \
-    password="WgM6wa0hYvmFsoKhcOAO0cqs74qJV7TadLYVL8xQRLBXE6sXeDcdiinzsyhloxFn" \
-    password_authentication="scram-sha-256"
+    # vault write database/config/my-postgresql-database \
+    # plugin_name="postgresql-database-plugin" \
+    # allowed_roles="my-role" \
+    # connection_url="postgresql://{{username}}:{{password}}@acid-minimal-cluster.postgress.svc.cluster.local:5432/foo" \
+    # username="zalando" \
+    # password="WgM6wa0hYvmFsoKhcOAO0cqs74qJV7TadLYVL8xQRLBXE6sXeDcdiinzsyhloxFn" \
+    # password_authentication="scram-sha-256"
