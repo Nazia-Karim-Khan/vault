@@ -34,8 +34,8 @@ vault status
 Access ui:
 Host entry: 10.10.3.27 vault.example.com
 
-http://vault.example.com:31334/ui/ 
-Token: Root token (hvs.FiwdU9nJngJHjSrL33kaYq22)
+http://vault.example.com:30080/ui/vault/auth
+Token: Root token ()
 
 Deploy postgress: 
 
@@ -105,7 +105,9 @@ Links: https://github.com/zalando/postgres-operator/blob/master/docs/quickstart.
 
 https://developer.hashicorp.com/vault/tutorials/kubernetes-introduction/kubernetes-secret-store-driver
 
+https://developer.hashicorp.com/vault/tutorials/app-integration/spring-reload-secrets#reload-dynamic-secrets
 
+https://developer.hashicorp.com/vault/docs/secrets/databases/postgresqls
 
 /////////////////////////////////////
 
