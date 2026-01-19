@@ -9,7 +9,8 @@ spring:
 
   config:
       # import: "optional:file:/vault/secrets/database.properties"
-      import: "optional:file:${CONFIG_HOME:/vault/secrets}/database.properties"
+      # import: "optional:file:${CONFIG_HOME:/vault/secrets}/database.properties"
+      import: file:${CONFIG_HOME:/vault/secrets}/database.properties
   kafka:
     bootstrap-servers: kafka-cluster-kafka-bootstrap.strimzi.svc.cluster.local:9092
 
