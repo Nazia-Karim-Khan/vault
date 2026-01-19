@@ -7,16 +7,18 @@ spring:
   # config:
   #     import: configtree:/mnt/secrets-store/
 
+  config:
+      import: "optional:file:/vault/secrets/database.properties"
   kafka:
     bootstrap-servers: kafka-cluster-kafka-bootstrap.strimzi.svc.cluster.local:9092
 
-  datasource:
-      url: jdbc:postgresql://acid-minimal-cluster2.postgress.svc.cluster.local:5432/foo2
-      # username: ${db-username}
-      # password: ${db-password}
-      username: ${username}
-      password: ${password}
-      driver-class-name: org.postgresql.Driver
+  # datasource:
+  #     url: jdbc:postgresql://acid-minimal-cluster2.postgress.svc.cluster.local:5432/foo2
+  #     # username: ${db-username}
+  #     # password: ${db-password}
+  #     username: ${username}
+  #     password: ${password}
+  #     driver-class-name: org.postgresql.Driver
 
   cloud:
       vault:

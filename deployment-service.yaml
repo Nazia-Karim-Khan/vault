@@ -13,22 +13,39 @@ spec:
     metadata:
       labels:
         app: hello-spring-boot-app
+      annotations:
+        vault.hashicorp.com/agent-inject: "true"
+        vault.hashicorp.com/role: "database"
+        vault.hashicorp.com/agent-cache-enable: "true"
+        vault.hashicorp.com/agent-inject-secret-database.properties: "database_2/creds/role_2"
+        vault.hashicorp.com/agent-inject-template-database.properties: |
+          spring.datasource.url=jdbc:postgresql://acid-minimal-cluster2.postgress.svc.cluster.local:5432/foo2
+          {{- with secret "database_2/creds/role_2" }}
+          spring.datasource.username={{ .Data.username }}
+          spring.datasource.password={{ .Data.password }}
+          {{- end }}
+        vault.hashicorp.com/agent-run-as-same-user: "true"
+        vault.hashicorp.com/agent-inject-command-database.properties: |
+          kill -TERM $(pidof java)
     spec:
       serviceAccountName: webapp-sa
       containers:
         - name: hello-spring-boot-app
           image: nazia141/spring-kafka-app:2.1
-          env:
-          - name: password
-            valueFrom:
-              secretKeyRef:
-                name: db-credentials     
-                key: password
-          - name: username
-            valueFrom:
-              secretKeyRef:
-                name: db-credentials     
-                key: username
+          securityContext:
+             runAsUser: 1000
+             runAsGroup: 3000
+          # env:
+          # - name: password
+          #   valueFrom:
+          #     secretKeyRef:
+          #       name: db-credentials     
+          #       key: password
+          # - name: username
+          #   valueFrom:
+          #     secretKeyRef:
+          #       name: db-credentials     
+          #       key: username
           imagePullPolicy: Always 
           ports:
             - containerPort: 8080
@@ -44,18 +61,18 @@ spec:
               port: 8080
             initialDelaySeconds: 5
             periodSeconds: 5
-          volumeMounts:
-            - name: secrets-store-inline
-              mountPath: /mnt/secrets-store
-              readOnly: true
-      volumes:
-        - name: secrets-store-inline
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              # secretProviderClass: "vault-db-creds"
-              secretProviderClass: "vault-database"
+      #     volumeMounts:
+      #       - name: secrets-store-inline
+      #         mountPath: /mnt/secrets-store
+      #         readOnly: true
+      # volumes:
+      #   - name: secrets-store-inline
+      #     csi:
+      #       driver: secrets-store.csi.k8s.io
+      #       readOnly: true
+      #       volumeAttributes:
+      #         # secretProviderClass: "vault-db-creds"
+      #         secretProviderClass: "vault-database"
 
 ---
 apiVersion: v1
