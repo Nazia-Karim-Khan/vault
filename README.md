@@ -172,3 +172,6 @@ cat /mnt/secrets-store/db-password
 - [Spring Reload Secrets](https://developer.hashicorp.com/vault/tutorials/app-integration/spring-reload-secrets#reload-dynamic-secrets)
 - [Vault PostgreSQL Documentation](https://developer.hashicorp.com/vault/docs/secrets/databases/postgresqls)
 - [Refresh Credentials Dynamically](https://www.hashicorp.com/en/blog/refresh-secrets-for-kubernetes-applications-with-vault-agent#update-secrets-by-application-restart)
+- [Vault Injector](https://developer.hashicorp.com/vault/docs/deploy/kubernetes/injector)
+- [Vault Injector Annotations](https://developer.hashicorp.com/vault/docs/deploy/kubernetes/injector/annotations)
+- [Demo App](https://github.com/hashicorp-dev-advocates/workshop-vault-for-developers/blob/main/payments-app/java/src/main/java/com/hashicorpdevadvocates/paymentsapp/VaultRefresher.java)
