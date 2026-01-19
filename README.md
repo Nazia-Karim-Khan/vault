@@ -171,3 +171,4 @@ cat /mnt/secrets-store/db-password
 - [Vault Kubernetes Secret Store Driver](https://developer.hashicorp.com/vault/tutorials/kubernetes-introduction/kubernetes-secret-store-driver)
 - [Spring Reload Secrets](https://developer.hashicorp.com/vault/tutorials/app-integration/spring-reload-secrets#reload-dynamic-secrets)
 - [Vault PostgreSQL Documentation](https://developer.hashicorp.com/vault/docs/secrets/databases/postgresqls)
+- [Refresh Credentials Dynamically](https://www.hashicorp.com/en/blog/refresh-secrets-for-kubernetes-applications-with-vault-agent#update-secrets-by-application-restart)

@@ -19,3 +19,11 @@ spec:
     bar: {}
   postgresql:
     version: "17"
+
+# vault write database_2/config/database2 \
+#     plugin_name="postgresql-database-plugin" \
+#     allowed_roles="role_2" \
+#     connection_url="postgresql://{{username}}:{{password}}@acid-minimal-cluster2.postgress.svc.cluster.local:5432/foo2" \
+#     username="zalando2" \
+#     password="u53zk8jVAGlDZmmv6zaMhwSIBnNk9RdjETOfwHTb3hqa8dOEXYSW1uPYkkebrWm0" \
+#     password_authentication="scram-sha-256"
