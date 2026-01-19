@@ -14,6 +14,7 @@ spec:
       labels:
         app: hello-spring-boot-app
       annotations:
+        vault.hashicorp.com/service: "http://vault.vault.svc.cluster.local:8200"
         vault.hashicorp.com/agent-inject: "true"
         vault.hashicorp.com/role: "database"
         vault.hashicorp.com/agent-cache-enable: "true"
@@ -24,17 +25,19 @@ spec:
           spring.datasource.username={{ .Data.username }}
           spring.datasource.password={{ .Data.password }}
           {{- end }}
-        vault.hashicorp.com/agent-run-as-same-user: "true"
+        # vault.hashicorp.com/agent-run-as-same-user: "true"
+        # vault.hashicorp.com/agent-inject-command-database.properties: |
+        #   kill -TERM 1
         vault.hashicorp.com/agent-inject-command-database.properties: |
-          kill -TERM $(pidof java)
+          wget -qO- --header='Content-Type:application/json' --post-data='{}' http://127.0.0.1:8080/actuator/refresh
     spec:
       serviceAccountName: webapp-sa
       containers:
         - name: hello-spring-boot-app
           image: nazia141/spring-kafka-app:2.1
-          securityContext:
-             runAsUser: 1000
-             runAsGroup: 3000
+          # securityContext:
+          #    runAsUser: 1000
+          #    runAsGroup: 3000
           # env:
           # - name: password
           #   valueFrom:
