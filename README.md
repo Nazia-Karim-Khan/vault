@@ -190,8 +190,8 @@ Expected output:
 
 ```properties
 spring.datasource.url=jdbc:postgresql://acid-minimal-cluster2.postgress.svc.cluster.local:5432/foo2
-spring.datasource.username=v-kubernet-role_2-ApNF66lXv22PynuURh6i-1768988469
-spring.datasource.password=iT0U-eDpYMq6grCFYp6S
+spring.datasource.username=<username>
+spring.datasource.password=<password>
 ```
 
 ### Configure TTL
