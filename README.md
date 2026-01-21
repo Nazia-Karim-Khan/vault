@@ -15,6 +15,7 @@ helm repo add secrets-store-csi-driver https://kubernetes-sigs.github.io/secrets
 helm pull secrets-store-csi-driver/secrets-store-csi-driver --untar
 helm install csi-driver ./secrets-store-csi-driver -n csi --create-namespace -f ./secrets-store-csi-driver/values.yaml
 ```
+
 ## Install and Set Up Vault
 
 ```bash
@@ -151,19 +152,59 @@ path "database/creds/my-role" {
 kubectl apply -f db-secret-provider.yaml -n spring
 ```
 
-### Deploy Application
+## Deploy Application
 
 ```bash
 kubectl apply -f deployment-service.yaml -n spring
 ```
 
-### Verify Configuration
+### Verify Deployment
 
 Shell into pod and verify:
 
 ```bash
 cat /mnt/secrets-store/db-password
 ```
+
+## Deploy Application with Vault Injector
+
+Using CSI won't refresh the secrets when they expire. To refresh the secrets automatically, we'll be using Vault Injector.
+
+### Apply Deployment
+
+Apply the `deployment-service.yaml` file. This will create a file in the pod at `/vault/secrets` named `database.properties`:
+
+```bash
+kubectl apply -f deployment-service.yaml -n spring
+```
+
+### Verify Secrets
+
+Shell into the pod and view the generated secrets:
+
+```bash
+cat /vault/secrets/database.properties
+```
+
+Expected output:
+
+```properties
+spring.datasource.url=jdbc:postgresql://acid-minimal-cluster2.postgress.svc.cluster.local:5432/foo2
+spring.datasource.username=v-kubernet-role_2-ApNF66lXv22PynuURh6i-1768988469
+spring.datasource.password=iT0U-eDpYMq6grCFYp6S
+```
+
+### Configure TTL
+
+Set the role of secret engine database with the following TTL settings:
+
+| Property | Value |
+|----------|-------|
+| **Generated credentials's Time-to-Live (TTL)** | 2 minutes |
+| **Generated credentials's maximum Time-to-Live (Max TTL)** | 3 minutes |
+
+You can observe the refreshed secrets at pod logs after 3 minutes
+
 
 ## References
 
