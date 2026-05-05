@@ -204,6 +204,9 @@ Set the role of secret engine database with the following TTL settings:
 | **Generated credentials's maximum Time-to-Live (Max TTL)** | 3 minutes |
 
 Also, set ttl for kubernetes role (i.e. 1 hours)
+- Generated Token's Initial TTL
+- Generated Token's Explicit Maximum TTL
+- generated Token's Maximum TTL
 
 You can observe the refreshed secrets at pod logs after 3 minutes
 
